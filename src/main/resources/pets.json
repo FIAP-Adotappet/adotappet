@@ -1,0 +1,26 @@
+[
+  {
+    "nome": "Toddy",
+    "tipo": "CACHORRO",
+    "raca": "Vira-lata",
+    "dataNascimento": "2019-02-03",
+    "porte": "MEDIO",
+    "sexo": "MASCULINO"
+  },
+  {
+    "nome": "Luna",
+    "tipo": "GATO",
+    "raca": "Siamês",
+    "dataNascimento": "2020-05-03",
+    "porte": "MEDIO",
+    "sexo": "FEMININO"
+  },
+  {
+    "nome": "Toddy",
+    "tipo": "CACHORRO",
+    "raca": "São Bernardo",
+    "dataNascimento": "2021-05-10",
+    "porte": "GRANDE",
+    "sexo": "MASCULINO"
+  }
+]
