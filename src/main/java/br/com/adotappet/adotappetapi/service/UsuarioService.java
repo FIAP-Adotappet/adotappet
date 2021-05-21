@@ -23,6 +23,7 @@ public class UsuarioService {
         return toDTO(usuarioRepository.save(usuario));
     }
 
+    //TODO ainda não está funcionando corretamente
     public UsuarioDTO atualizaUsuario(UsuarioDTO usuarioDTO, Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
         updateEntity(usuarioDTO, usuario);

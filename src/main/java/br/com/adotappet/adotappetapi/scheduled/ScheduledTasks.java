@@ -13,11 +13,12 @@ public class ScheduledTasks {
     @Autowired
     public ScheduledTasks(PetService petService) {
         this.petService = petService;
+        this.petService.populatePets();
         this.syncPets();
     }
 
     @Scheduled(cron="0 0 0 * * *")
     public void syncPets() {
-        this.petService.populatePets();
+        //TODO ver como atualizar com os dados reais (usar algum dado para saber que é o mesmo pet)
     }
 }
