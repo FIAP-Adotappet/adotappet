@@ -22,6 +22,8 @@ public class PetDTO {
 
     private Sexo sexo;
 
+    private String imagem;
+
 
     public enum Porte {
         GRANDE,

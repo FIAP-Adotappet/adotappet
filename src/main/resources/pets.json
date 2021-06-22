@@ -1,11 +1,30 @@
 [
   {
-    "nome": "Toddy",
+    "nome": "Thor",
     "tipo": "CACHORRO",
     "raca": "Vira-lata",
     "dataNascimento": "2019-02-03",
     "porte": "MEDIO",
-    "sexo": "MASCULINO"
+    "sexo": "MASCULINO",
+    "imagem": "https://s2.glbimg.com/XI_QifLkJB-6IxQ6eZ-u7XFU3ZY=/607x426/smart/e.glbimg.com/og/ed/f/original/2020/02/27/vira-lata.jpg"
+  },
+  {
+    "nome": "Luna",
+    "tipo": "GATO",
+    "raca": "Siamês",
+    "dataNascimento": "2020-11-03",
+    "porte": "MEDIO",
+    "sexo": "FEMININO",
+    "imagem": "https://www.petlove.com.br/images/breeds/192825/profile/original/siames-p.jpg?1532626975"
+  },
+  {
+    "nome": "Marley",
+    "tipo": "CACHORRO",
+    "raca": "São Bernardo",
+    "dataNascimento": "2021-05-10",
+    "porte": "GRANDE",
+    "sexo": "MASCULINO",
+    "imagem": "https://i.pinimg.com/originals/6a/0c/14/6a0c145d4b8116c59ec665f3fd45af8f.jpg"
   },
   {
     "nome": "Luna",
@@ -13,14 +32,7 @@
     "raca": "Siamês",
     "dataNascimento": "2020-05-03",
     "porte": "MEDIO",
-    "sexo": "FEMININO"
-  },
-  {
-    "nome": "Toddy",
-    "tipo": "CACHORRO",
-    "raca": "São Bernardo",
-    "dataNascimento": "2021-05-10",
-    "porte": "GRANDE",
-    "sexo": "MASCULINO"
+    "sexo": "FEMININO",
+    "imagem": "https://www.petlove.com.br/images/breeds/192825/profile/original/siames-p.jpg?1532626975"
   }
 ]

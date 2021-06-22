@@ -1,7 +1,6 @@
 package br.com.adotappet.adotappetapi.entity;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,6 +30,8 @@ public class Pet {
     private Sexo sexo;
 
     private Boolean disponivel;
+
+    private String imagem;
 
     public enum Porte {
         GRANDE,
