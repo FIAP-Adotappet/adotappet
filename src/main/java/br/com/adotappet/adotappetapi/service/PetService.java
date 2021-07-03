@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +32,17 @@ public class PetService {
         JsonLoader jsonLoader = new JsonLoader();
         List<Pet> pets = List.of(jsonLoader.loadBeanFromJson(Pet[].class, "pets.json"));
         pets.forEach(pet -> pet.setDisponivel(true));
+        saveAll(pets);
+    }
+
+    private void saveAll(List<Pet> pets) {
+        pets.forEach(this::updateIfExistsByExternalId);
         petRepository.saveAll(pets);
+    }
+
+    private void updateIfExistsByExternalId(Pet pet) {
+        Optional<Pet> petInDbOpt = petRepository.findByExternalId(pet.getExternalId());
+        petInDbOpt.ifPresent(petInDb -> pet.setId(petInDb.getId()));
     }
 
     @Transactional(readOnly = true)

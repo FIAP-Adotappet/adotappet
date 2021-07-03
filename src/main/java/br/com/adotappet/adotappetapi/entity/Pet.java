@@ -33,6 +33,8 @@ public class Pet {
 
     private String imagem;
 
+    private String externalId;
+
     public enum Porte {
         GRANDE,
         MEDIO,
