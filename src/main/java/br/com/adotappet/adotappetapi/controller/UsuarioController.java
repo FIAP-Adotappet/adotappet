@@ -23,7 +23,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/{id}")
-    public UsuarioDTO updateUser(@Validated @RequestBody UsuarioDTO usuarioDTO,@PathVariable Long id) {
+    public UsuarioDTO updateUser(@Validated @RequestBody UsuarioDTO usuarioDTO, @PathVariable Long id) {
         return usuarioService.atualizaUsuario(usuarioDTO, id);
     }
 
