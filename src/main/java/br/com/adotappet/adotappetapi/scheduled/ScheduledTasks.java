@@ -1,6 +1,6 @@
 package br.com.adotappet.adotappetapi.scheduled;
 
-import br.com.adotappet.adotappetapi.service.PetService;
+import br.com.adotappet.adotappetapi.domain.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
