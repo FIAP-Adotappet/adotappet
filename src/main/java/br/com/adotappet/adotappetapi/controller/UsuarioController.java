@@ -1,10 +1,12 @@
 package br.com.adotappet.adotappetapi.controller;
 
+import br.com.adotappet.adotappetapi.dto.LoginDTO;
 import br.com.adotappet.adotappetapi.dto.UsuarioDTO;
 import br.com.adotappet.adotappetapi.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -18,12 +20,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public UsuarioDTO newUser(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+    public UsuarioDTO newUser(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         return usuarioService.criaUsuario(usuarioDTO);
     }
 
     @PostMapping("/{id}")
-    public UsuarioDTO updateUser(@Validated @RequestBody UsuarioDTO usuarioDTO, @PathVariable Long id) {
+    public UsuarioDTO updateUser(@Valid @RequestBody UsuarioDTO usuarioDTO, @PathVariable Long id) {
         return usuarioService.atualizaUsuario(usuarioDTO, id);
     }
 
@@ -32,5 +34,8 @@ public class UsuarioController {
         return usuarioService.findById(id);
     }
 
-    //TODO login
+    @PostMapping("/login")
+    public UsuarioDTO login(@Valid @RequestBody LoginDTO loginDTO) {
+        return usuarioService.login(loginDTO);
+    }
 }

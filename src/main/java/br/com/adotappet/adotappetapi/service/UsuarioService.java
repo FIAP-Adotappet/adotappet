@@ -1,5 +1,6 @@
 package br.com.adotappet.adotappetapi.service;
 
+import br.com.adotappet.adotappetapi.dto.LoginDTO;
 import br.com.adotappet.adotappetapi.dto.UsuarioDTO;
 import br.com.adotappet.adotappetapi.entity.Usuario;
 import br.com.adotappet.adotappetapi.repository.UsuarioRepository;
@@ -31,6 +32,11 @@ public class UsuarioService {
 
     public UsuarioDTO findById(Long id) {
         return toDTO(usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado")));
+    }
+
+    public UsuarioDTO login(LoginDTO loginDTO) {
+        Usuario usuario = usuarioRepository.findByEmailAndSenha(loginDTO.getEmail(), loginDTO.getSenha()).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        return toDTO(usuario);
     }
 
     private Usuario toEntity(UsuarioDTO usuarioDTO) {
