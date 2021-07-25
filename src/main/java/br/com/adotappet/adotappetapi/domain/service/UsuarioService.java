@@ -3,6 +3,8 @@ package br.com.adotappet.adotappetapi.domain.service;
 import br.com.adotappet.adotappetapi.api.dto.LoginDTO;
 import br.com.adotappet.adotappetapi.api.dto.UsuarioDTO;
 import br.com.adotappet.adotappetapi.domain.entity.Usuario;
+import br.com.adotappet.adotappetapi.domain.exception.BusinessException;
+import br.com.adotappet.adotappetapi.domain.exception.ConflictException;
 import br.com.adotappet.adotappetapi.domain.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class UsuarioService {
     }
 
     public UsuarioDTO criaUsuario(UsuarioDTO usuarioDTO) {
+        usuarioRepository.findByEmail(usuarioDTO.getEmail()).ifPresent(usuario -> {
+            throw new ConflictException("E-mail já cadastrado: " + usuario.getEmail());
+        });
         Usuario usuario = toEntity(usuarioDTO);
         return toDTO(usuarioRepository.save(usuario));
     }
