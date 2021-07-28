@@ -18,6 +18,8 @@ public class Endereco {
 
     private Integer numero;
 
+    private Integer cep;
+
     private String complemento;
 
     private String bairro;
