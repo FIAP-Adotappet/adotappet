@@ -53,6 +53,10 @@ public class PetService {
         return toDTO(petRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Pet {" + id + "} not found")));
     }
 
+    public void changePetDisponivel(Long petId, boolean disponivel) {
+        petRepository.findById(petId).ifPresent(pet -> pet.setDisponivel(disponivel));
+    }
+
     private PetDTO toDTO(Pet pet) {
         return modelMapper.map(pet, PetDTO.class);
     }

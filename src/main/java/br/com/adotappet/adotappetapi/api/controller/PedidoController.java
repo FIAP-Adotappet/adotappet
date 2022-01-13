@@ -1,52 +1,27 @@
 package br.com.adotappet.adotappetapi.api.controller;
 
-import br.com.adotappet.adotappetapi.api.dto.PedidoDTO;
-import br.com.adotappet.adotappetapi.api.dto.PetDTO;
-import br.com.adotappet.adotappetapi.api.dto.UsuarioDTO;
-import br.com.adotappet.adotappetapi.domain.service.PedidoService;
-import br.com.adotappet.adotappetapi.domain.service.PetService;
-import br.com.adotappet.adotappetapi.domain.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import br.com.adotappet.adotappetapi.core.rabbitmq.NovoPedidoRabbitMQConfig;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
-    private final PedidoService pedidoService;
-    private final PetService petService;
-    private final UsuarioService usuarioService;
+    RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    public PedidoController(PedidoService pedidoService, PetService petService, UsuarioService usuarioService) {
-        this.pedidoService = pedidoService;
-        this.petService = petService;
-        this.usuarioService = usuarioService;
+    public PedidoController(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
     }
 
-    @GetMapping("/novo/{petId}/{usuarioId}")
-    public PedidoDTO novo(@PathVariable Long petId, @PathVariable Long usuarioId) {
-        PetDTO petDTO = petService.findById(petId);
-        UsuarioDTO usuarioDTO = usuarioService.findById(usuarioId);
-        return pedidoService.iniciaPedido(usuarioDTO, petDTO);
-    }
-
-    @GetMapping("/aprova/{pedidoId}")
-    public PedidoDTO aprova(@PathVariable Long pedidoId) {
-        return pedidoService.aprovaPedido(pedidoId, true);
-    }
-
-    @GetMapping("/rejeita/{pedidoId}")
-    public PedidoDTO rejeita(@PathVariable Long pedidoId) {
-        return pedidoService.aprovaPedido(pedidoId, false);
-    }
-
-    @GetMapping("/finaliza/{pedidoId}")
-    public PedidoDTO finaliza(@PathVariable Long pedidoId) {
-        return pedidoService.finalizaPedido(pedidoId);
-    }
-
-    @GetMapping("/cancela/{pedidoId}")
-    public PedidoDTO cancela(@PathVariable Long pedidoId) {
-        return pedidoService.cancelaPedido(pedidoId);
+    @RequestMapping("/novo/{petId}/{usuarioId}")
+    public ResponseEntity<String> criaPedido(@PathVariable Long petId, @PathVariable Long usuarioId) {
+        Map<String, Long> actionMap = Map.of("pet_id", petId, "usuario_id", usuarioId);
+        rabbitTemplate.convertAndSend(NovoPedidoRabbitMQConfig.NOVO_PEDIDO_MESSAGE_QUEUE, actionMap);
+        return ResponseEntity.accepted().body("Pedido criado para avaliação");
     }
 }
