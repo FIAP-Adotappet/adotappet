@@ -5,6 +5,8 @@ import br.com.adotappet.adotappetapi.domain.entity.Pet;
 import br.com.adotappet.adotappetapi.domain.repository.PetRepository;
 import br.com.adotappet.adotappetapi.util.JsonLoader;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ public class PetService {
 
     private final PetRepository petRepository;
     private final ModelMapper modelMapper;
+    private static final Logger logger = LoggerFactory.getLogger(PetService.class);
 
     @Autowired
     public PetService(PetRepository petRepository, ModelMapper modelMapper) {
@@ -54,7 +57,14 @@ public class PetService {
     }
 
     public void changePetDisponivel(Long petId, boolean disponivel) {
-        petRepository.findById(petId).ifPresent(pet -> pet.setDisponivel(disponivel));
+        petRepository.findById(petId).ifPresent(pet -> atualizaPet(pet, disponivel));
+    }
+
+    private void atualizaPet(Pet pet, boolean disponivel) {
+        logger.info("Atualizando status disponivel do pet: {} para {}", pet.getNome(), pet.getDisponivel());
+        pet.setDisponivel(disponivel);
+        logger.info("Pet {} {} esta disponivel", pet.getNome(), disponivel ? "" : "nao");
+        petRepository.save(pet);
     }
 
     private PetDTO toDTO(Pet pet) {

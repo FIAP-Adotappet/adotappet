@@ -16,11 +16,12 @@ public class PedidoAceitoMessageListener {
         this.petService = petService;
     }
 
-    public void receiveMessage(Map<String, String> message) {
+    public void receiveMessage(Map<String, Object> message) {
         log.info("Received <" + message + ">");
-        Long petId = Long.valueOf(message.get("pet_id"));
-        Boolean aceito = Boolean.valueOf(message.get("aceito"));
-        petService.changePetDisponivel(petId, !aceito);
-        log.info("Message processed...");
+        Long pedidoId = Long.valueOf(message.get("pedido_id").toString());
+        Long petId = Long.valueOf(message.get("pet_id").toString());
+        boolean aprovado = Boolean.parseBoolean(message.get("aprovado").toString());
+        petService.changePetDisponivel(petId, !aprovado);
+        log.info(String.format("Pet id: %d, do pedido %d, que foi %s atualizado com suceso", petId, pedidoId, aprovado ? "aceito" : "rejeitado"));
     }
 }
