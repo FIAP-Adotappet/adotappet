@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      APP_PROFILE: test
+    networks:
+      - default
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - default
+
+  pedido-api:
+    image: feayoub/pedido-api
+    ports:
+      - "8081:8080"
+    environment:
+      APP_PROFILE: test
+    networks:
+      - default
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+
+networks:
+  default:
+    driver: bridge
